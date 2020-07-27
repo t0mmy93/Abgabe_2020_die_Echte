@@ -1,4 +1,4 @@
 namespace Zauberbild {
-let name: string = "haus2";
+let name: string = "haus1";
 
 }
