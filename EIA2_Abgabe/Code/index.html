@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <title>Zauberbild</title>
+    <meta charset="utf-8" />
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <!--
+		<script src="scripts/name.js" type="text/javascript" charset="utf-8"></script>
+	
+        -->
+    <script src="Classes/objects.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Classes/movingObjects.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Classes/circle.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Classes/quad.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Classes/triangle.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Main.js" type="text/javascript" charset="utf-8"></script>
+</head>
+
+<body>
+    <div id="startPage">
+        <h1>Zauberbild</h1>
+        <h2>Willkommen!</h2>
+        <p>Lorem ipsumksfnvl dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+            labore et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+            clita kasd gubergren, nohvjkl sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
+            amet,
+            consetetur sadipscing elitr, sed diam nonumy eirnjvugmod tempor invidunt ut labore et dolore magna aliquyam
+            erat,
+            sed diam voluptua. At veroksvhbidf eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+            gubergren, no
+            sea takimata sanctus est Lorem ipsum dolor sit amet.
+        </p>
+        <div>
+
+            <!--   <p>Breite:</p>
+            <input type="range" min="300" max="800" value="50" class="slider" id="pixelWidth" name="pixelWidth">
+         -->
+            <p>Höhe:</p>
+            <input type="range" min="500" max="1000" value="50" class="slider" id="pixelHeight" name="pixelHeight">
+
+
+            <!--
+                <input type="radio" id="smallRadio" class="radio_canvasSize" name="canvasSizeRadio" value="300">
+                <label for="smallRadio">small canvas size</label>
+                <input type="radio" id="middleRadio" class="radio_canvasSize" name="canvasSizeRadio" value="500">
+                <label for="middleRadio">middle canvas size</label>
+                <input type="radio" id="largeRadio" class="radio_canvasSize" name="canvasSizeRadio" value="700">
+                <label for="largeRadio">large canvas size</label>
+                -->
+        </div>
+        <div>
+            <!--
+                Hier kommt die Datenbanksache rein
+            -->
+        </div>
+        <button id="startButt">Start Game</button>
+    </div>
+
+    <div id="gamePage">
+        <!-- 
+            Hier sind die Komponenten für die Spielseite hinterlegt
+           let interfaceRadio: HTMLDivElement = <HTMLDivElement>document.getElementById("interface");
+               interfaceRadio.addEventlistener("input" , handleChange);
+        -->
+        <div id="interface">
+            <label for="xSpeed">xSpeed</label> 
+            <input type="range" min="0" max="5" value="0" class="slider" id="xSpeed" name="xSpeed"><br>
+            <label for="ySpeed">ySpeed</label> 
+            <input type="range" min="0" max="5" value="0" class="slider" id="ySpeed" name="ySpeed"><br>
+            <label for="scale">Scale</label> 
+            <input type="range" min="0" max="5" value="0" class="slider" id="scale" name="Scale"><br>
+            <label for="color">Color</label> 
+            <input type="color" value="#ff0000" id="color" name="color"><br>
+            <label for="spin">Spin</label>           
+            <select id="spin" name="spin">
+                <option value="left">left</option>
+                <option value="right">right</option>
+                <option value="none">none</option>
+            </select>
+        </div>
+
+        <!--
+            Hier kommt der <canvas> rein!
+        -->
+
+        <button id="finalButt">Final Game</button>
+    </div>
+
+    <div id="finalPage">
+        <!-- Hier sind die Komponenten für die Endseite hinterlegt-->
+        <h2>Speicheroption</h2>
+        <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
+            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet
+            clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
+            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
+            sea takimata sanctus est Lorem ipsum dolor sit amet.
+        </p>
+    </div>
+
+
+</body>
+
+</html>
