@@ -46,7 +46,9 @@ namespace Zauberbild {
         //draw-methode
         draw(): void {
             crc.fillStyle = this.color;
+           
             crc.fillRect(this.xPos, this.yPos, this.size, this.size);
+           // crc.translate(this.xPos, this.yPos);
         }
 
         //move-methode
@@ -69,7 +71,7 @@ namespace Zauberbild {
 
         //spin-methoder
         spin(_selected: MovingObjects): void {
-            let selected = _selected;
+
             //selected = HTMLCanvasElement
 
 

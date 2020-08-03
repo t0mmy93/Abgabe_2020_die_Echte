@@ -42,6 +42,7 @@ namespace Zauberbild {
         draw(): void {
             crc.beginPath();
             crc.arc(this.xPos, this.yPos, this.size, this.start, this.stop);
+            
             crc.stroke();
             crc.fillStyle = this.color;
             crc.fill();

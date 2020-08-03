@@ -45,6 +45,7 @@ namespace Zauberbild {
         //draw-methode
         draw(): void {
             crc.beginPath();
+            
             crc.moveTo(this.xPos, 470);
             crc.lineTo(this.xPos + 50, 470);
             crc.lineTo(this.xPos + 25, 430);

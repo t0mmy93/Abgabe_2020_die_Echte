@@ -41,6 +41,7 @@ var Zauberbild;
         draw() {
             Zauberbild.crc.fillStyle = this.color;
             Zauberbild.crc.fillRect(this.xPos, this.yPos, this.size, this.size);
+            // crc.translate(this.xPos, this.yPos);
         }
         //move-methode
         move() {
@@ -60,7 +61,6 @@ var Zauberbild;
         }
         //spin-methoder
         spin(_selected) {
-            let selected = _selected;
             //selected = HTMLCanvasElement
             //hier kommt die spin methode rein (also drehen zB. durch zugriff auf css "style.rotate")
             //if (this.spinValue == "left"){rotate left}
