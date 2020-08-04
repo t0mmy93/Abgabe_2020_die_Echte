@@ -36,7 +36,6 @@ namespace Zauberbild {
     let canvasContainer: HTMLDivElement;
     let finalButton: HTMLButtonElement;
 
-    let inputElementId: string = "";
 
     let sliderXSpeed: HTMLInputElement;
     let sliderYSpeed: HTMLInputElement;
@@ -44,13 +43,12 @@ namespace Zauberbild {
     let color: HTMLInputElement;
     let spin: HTMLInputElement;
 
-    let clicked: boolean = false;
+
     let index: number;
 
 
 
 
-    // let interface: HTMLDivElement = <HTMLDivElement>document.getElementById("infertace");
 
     function init(_event: Event): void {
 
@@ -61,14 +59,6 @@ namespace Zauberbild {
         spin = <HTMLInputElement>document.getElementById("spin");
 
 
-        /*
-                fps = 25;
-                quads = [];
-                triangles = [];
-                cirlces = [];
-                movingObjects = [];
-                objects = [];
-        */
         startPage = <HTMLDivElement>document.getElementById("startPage");
         startPage.style.display = "block";
 
@@ -88,9 +78,9 @@ namespace Zauberbild {
             let target: HTMLInputElement = <HTMLInputElement>_event.target;
             let slider: HTMLCollectionOf<HTMLInputElement> = startPage.getElementsByTagName("input");
             let sliderWidth: HTMLInputElement = slider[0];
-            //  let sliderHeight: HTMLInputElement = slider[1];
+
             canvasWidth = sliderWidth.value;
-            canvasHeight = 500; //parseInt(canvasWidth) * 0.7777;
+            canvasHeight = 500;
 
             console.log("Breite: " + canvasWidth);
             console.log("Höhe: " + canvasHeight);
@@ -100,24 +90,17 @@ namespace Zauberbild {
         }
 
     }
-    // Seite 2
-    // erstellte objekte Interface
-    let quad: Quad;
-    let circle: Circle;
-    let triangle: Triangle;
-    let type: string;
+
+
 
 
 
     //___________________FUNKTION CHECK IF CLICK ON INTERFACE AND ON GEOMETRY_____________
 
-    function hitCheck(): void {
-
-
-    }
 
 
 
+    // checkt ob Mausklick über dem objekt Quad im interface statt gefunden hat 
     function mouseDownCheck(_event: MouseEvent): void {
         //  for (let i: number = 0; i < interfaceObjects.length; i++) {
         if (_event.offsetX > 50 && _event.offsetX < 133 && _event.offsetY > 420 && _event.offsetY < 495) {
@@ -131,59 +114,43 @@ namespace Zauberbild {
         if (_event.offsetX > 270 && _event.offsetX < 353 && _event.offsetY > 420 && _event.offsetY < 495) {
             console.log("TRIANGLEHIT");
         }
-
-
-
-        //F}
-        /*  clicked = true;
-          console.log("CLICK = TRUE");
-          hitCheck();
-  */
-        // drag fucntion welche x y werte 
     }
 
     function quadHit(_event: MouseEvent): void {
         console.log("QUADHIT FUCNKTION CHECK ");
         canvas.addEventListener("mouseup", quadDrop);
-
     }
-
+    // quad plazieren
     function quadDrop(_event: MouseEvent): void {
         canvas.removeEventListener("mousemove", quadHit);
 
-        let newQuad: Quad = new Quad("quad", _event.clientX, _event.clientY, 1, "yellow", 75);
+        let newQuad: Quad = new Quad("quad", _event.clientX, _event.clientY, 1, "yellow", 75, false);
         movingObjects.push(newQuad);
         console.log(" MOVINOBJ LÄNGE: " + movingObjects.length);
 
         canvas.removeEventListener("mouseup", quadDrop);
         for (let i: number = 0; i < movingObjects.length; i++) {
             movingObjects[i].type = "quad" + movingObjects.length;
+
             movingObjects[i].xSpeed = 0;
             movingObjects[i].ySpeed = 0;
-            movingObjects[i].xPos = _event.offsetX;
-            movingObjects[i].yPos = _event.offsetY;
-            // movingObjects[i].size = 75;
         }
-
-
         console.log(" ARAAY LÄNGE: " + movingObjects.length);
         console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
-
     }
 
 
-
+    // sobald die Maus über dem Target liegt kann man auf objekte klicken
     function selectArea(_event: MouseEvent): void {
         let xCursor: number = _event.clientX;
         let yCursor: number = _event.clientY;
         if (yCursor < 410 && xCursor >= parseInt(canvasWidth)) {
             console.log("HOVER GEHT");
             canvas.addEventListener("mousedown", selectObject);
-
         }
     }
 
-
+    // Obejct auswählen
     function selectObject(_event: MouseEvent): void {
         for (let i: number = 0; i < movingObjects.length; i++) {
             if (_event.offsetX > movingObjects[i].xPos && _event.offsetX < movingObjects[i].xPos + movingObjects[i].size && _event.offsetY > movingObjects[i].yPos && _event.offsetY < movingObjects[i].yPos + movingObjects[i].size) {
@@ -193,20 +160,22 @@ namespace Zauberbild {
                 sliderYSpeed.addEventListener("change", handleYSpeed);
                 scale.addEventListener("change", handleSize);
                 color.addEventListener("input", handleColor);
-
+                canvas.addEventListener("mouseup", function (): void {
+                    movingObjects[i].glow = true;
+                    console.log("EVENTLISTENER GLOW");
+                });
                 console.log("INDEX:" + index);
-
-
             }
         }
     }
 
-    //___TEST
+    //___TEST INPUT auslesen und anpassen
 
+    // auf x Geschwindigkeit reagieren
     function handleXSpeed(): void {
 
         // console.log("HANDLE XSPEED");
-        //   console.log("HANDLE XSPEED" + index);
+        // console.log("HANDLE XSPEED" + index);
         let xSpeedOld: number = movingObjects[index].xSpeed;
         console.log("xPSEEROLD:  " + xSpeedOld);
         let xSpeedNew: string = sliderXSpeed.value;
@@ -215,11 +184,9 @@ namespace Zauberbild {
         movingObjects[index].xSpeed = xSpeedNewInt;
         console.log("FINALE XSPEED: " + movingObjects[index].xSpeed);
         movingObjects[index].draw();
-        //  movingObjects[index].move();
-
 
     }
-
+    // auf y Geschindigkeit reagieren
     function handleYSpeed(): void {
 
         //console.log("HANDLE YSPEED" + index);
@@ -230,12 +197,9 @@ namespace Zauberbild {
         //  console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
         movingObjects[index].ySpeed = ySpeedNewInt;
         console.log("FINALE YSPEED: " + movingObjects[index].ySpeed);
-        //   movingObjects[index].draw();
-        //  movingObjects[index].move();
-
 
     }
-
+    // auf größen Änderung reagieren
     function handleSize(): void {
 
         //   console.log("HANDLE SCALE" + index);
@@ -246,12 +210,8 @@ namespace Zauberbild {
         console.log("SCALENEW: " + sizeNewInt);
         movingObjects[index].size = sizeNewInt;
         console.log("FINALE SCALE: " + movingObjects[index].size);
-        //  movingObjects[index].draw();
-        // movingObjects[index].move();
-
-
     }
-
+    // Auf Farbänderung reagieren
     function handleColor(): void {
 
         //console.log("HANDLE COLOR" + index);
@@ -280,7 +240,7 @@ namespace Zauberbild {
         circle.draw();
         console.log("circlex " + circle.xPos + "circley " + circle.yPos + circle.color);
         // viereck
-        let quad: Quad = new Quad("quad" + i, 50, 410, 1, "yellow", 75);
+        let quad: Quad = new Quad("quad" + i, 50, 410, 1, "yellow", 75, false);
         quad.draw();
         console.log("Quadx " + quad.xPos + "Quady " + quad.size);
         // Dreieck
@@ -288,18 +248,12 @@ namespace Zauberbild {
         triangle.draw();
         console.log("Trianglex " + triangle.xPos + "Triangley " + triangle.yPos);
 
-
-        // img data speichern
         interfaceObjects.push(circle, quad, triangle);
         console.log("Inteface object daten:  " + interfaceObjects[1].size);
         console.log("QUAD TYPE: " + quad.type);
-
-
-
     }
+
     function startGame(): void {
-
-
 
         startPage.style.display = "none";
         gamePage.style.display = "block";
@@ -329,23 +283,15 @@ namespace Zauberbild {
         document.getElementById("quad");
         drawInterface();
 
-
-
-
+        // eventlistener 
         canvas.addEventListener("mousedown", mouseDownCheck);
         canvas.addEventListener("mouseover", selectArea);
-        /* sliderXSpeed.addEventListener("change", handleXSpeed);
-         sliderYSpeed.addEventListener("change", handleYSpeed);
-         scale.addEventListener("change", handleScale);
-         color.addEventListener("input", handleColor);
-         spin.addEventListener("input", handleSpin);
- */
+
+        // aktuelles Canvas speichern
         imgData = crc.getImageData(0, 0, canvas.width, canvas.height);
         console.log(imgData);
         setInterval(update, 20);
 
-        // window.requestAnimationFrame(update);
-        //  update();
 
     }
     // Seite 3
@@ -359,19 +305,14 @@ namespace Zauberbild {
 
 
     function update(): void {
-        // console.log("UPDATE");
+
         crc.clearRect(0, 0, parseInt(canvasWidth), canvasHeight);
         crc.putImageData(imgData, 0, 0);
 
         for (let i: number = 0; i < movingObjects.length; i++) {
             movingObjects[i].draw();
-            //   console.log("update " + i);
             movingObjects[i].move();
-            // console.log("UPDATE");
         }
-
-
-
     }
 
 

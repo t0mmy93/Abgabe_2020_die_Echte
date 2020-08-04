@@ -1,7 +1,7 @@
 var Zauberbild;
 (function (Zauberbild) {
     class Quad extends Zauberbild.MovingObjects {
-        constructor(_type, _xPos, _yPos, _scale, _color, _size) {
+        constructor(_type, _xPos, _yPos, _scale, _color, _size, _glow) {
             super();
             //Achtung!
             //hier spielt die drag sache mit rein
@@ -22,6 +22,8 @@ var Zauberbild;
             this.color = _color;
             // parameter spinValue soll durch value von input element verändert werden können
             this.size = _size;
+            // parameter glow
+            this.glow = _glow;
         }
         update() {
             /*   this.setColor();
@@ -37,6 +39,10 @@ var Zauberbild;
         }
         //draw-methode
         draw() {
+            if (this.glow == true) {
+                Zauberbild.crc.shadowBlur = 10;
+                Zauberbild.crc.shadowColor = "white";
+            }
             Zauberbild.crc.fillStyle = this.color;
             Zauberbild.crc.fillRect(this.xPos, this.yPos, this.size, this.size);
             //  crc.translate(this.xPos, this.yPos);

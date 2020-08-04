@@ -4,6 +4,7 @@ namespace Zauberbild {
         xSpeed: number;
         // speed auf yAchse 
         ySpeed: number;
+        glow: boolean = false;
 
 
         constructor() {

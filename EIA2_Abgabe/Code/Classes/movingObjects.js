@@ -3,6 +3,7 @@ var Zauberbild;
     class MovingObjects extends Zauberbild.Objects {
         constructor() {
             super();
+            this.glow = false;
         }
         update() {
             this.draw();
