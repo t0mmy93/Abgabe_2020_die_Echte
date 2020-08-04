@@ -93,13 +93,7 @@ namespace Zauberbild {
 
 
 
-
-
     //___________________FUNKTION CHECK IF CLICK ON INTERFACE AND ON GEOMETRY_____________
-
-
-
-
     // checkt ob Mausklick über dem objekt Quad im interface statt gefunden hat 
     function mouseDownCheck(_event: MouseEvent): void {
         //  for (let i: number = 0; i < interfaceObjects.length; i++) {
