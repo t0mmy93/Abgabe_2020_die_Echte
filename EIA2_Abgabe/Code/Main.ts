@@ -144,9 +144,6 @@ namespace Zauberbild {
 
     function quadHit(_event: MouseEvent): void {
         console.log("QUADHIT FUCNKTION CHECK ");
-        interfaceObjects[1].xPos = _event.offsetX;
-        interfaceObjects[1].yPos = _event.offsetY;
-        //  canvas.removeEventListener("mousemove", quadHit);
         canvas.addEventListener("mouseup", quadDrop);
 
     }
@@ -163,7 +160,9 @@ namespace Zauberbild {
             movingObjects[i].type = "quad" + movingObjects.length;
             movingObjects[i].xSpeed = 0;
             movingObjects[i].ySpeed = 0;
-           // movingObjects[i].size = 75;
+            movingObjects[i].xPos = _event.offsetX;
+            movingObjects[i].yPos = _event.offsetY;
+            // movingObjects[i].size = 75;
         }
 
 

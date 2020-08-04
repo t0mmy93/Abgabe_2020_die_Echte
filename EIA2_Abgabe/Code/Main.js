@@ -99,9 +99,6 @@ var Zauberbild;
     }
     function quadHit(_event) {
         console.log("QUADHIT FUCNKTION CHECK ");
-        Zauberbild.interfaceObjects[1].xPos = _event.offsetX;
-        Zauberbild.interfaceObjects[1].yPos = _event.offsetY;
-        //  canvas.removeEventListener("mousemove", quadHit);
         Zauberbild.canvas.addEventListener("mouseup", quadDrop);
     }
     function quadDrop(_event) {
@@ -114,6 +111,8 @@ var Zauberbild;
             Zauberbild.movingObjects[i].type = "quad" + Zauberbild.movingObjects.length;
             Zauberbild.movingObjects[i].xSpeed = 0;
             Zauberbild.movingObjects[i].ySpeed = 0;
+            Zauberbild.movingObjects[i].xPos = _event.offsetX;
+            Zauberbild.movingObjects[i].yPos = _event.offsetY;
             // movingObjects[i].size = 75;
         }
         console.log(" ARAAY LÄNGE: " + Zauberbild.movingObjects.length);
