@@ -44,9 +44,11 @@ namespace Zauberbild {
     let color: HTMLInputElement;
     let spin: HTMLInputElement;
 
+    let clicked: boolean = false;
+    let index: number;
 
-    let globalReturnVar: string;
-    let move: boolean = false;
+
+
 
     // let interface: HTMLDivElement = <HTMLDivElement>document.getElementById("infertace");
 
@@ -106,16 +108,165 @@ namespace Zauberbild {
     let type: string;
 
 
-    /* function placeGeaometry(): void {
- 
-         if (type == "quad") {
-             quad = new Quad("quad", 50, 410, 1, "yellow", "none");
-         }
- 
-     }*/
+
+    //___________________FUNKTION CHECK IF CLICK ON INTERFACE AND ON GEOMETRY_____________
+
+    function hitCheck(): void {
+
+
+    }
+
+
+
+    function mouseDownCheck(_event: MouseEvent): void {
+        //  for (let i: number = 0; i < interfaceObjects.length; i++) {
+        if (_event.offsetX > 50 && _event.offsetX < 133 && _event.offsetY > 420 && _event.offsetY < 495) {
+            console.log("QHADHIT");
+            canvas.addEventListener("mousemove", quadHit);
+            console.log("X: " + _event.offsetX + "Y: " + _event.offsetY);
+        }
+        if (_event.offsetX > 160 && _event.offsetX < 243 && _event.offsetY > 420 && _event.offsetY < 495) {
+            console.log("CIRCLEHIT");
+        }
+        if (_event.offsetX > 270 && _event.offsetX < 353 && _event.offsetY > 420 && _event.offsetY < 495) {
+            console.log("TRIANGLEHIT");
+        }
+
+
+
+        //F}
+        /*  clicked = true;
+          console.log("CLICK = TRUE");
+          hitCheck();
+  */
+        // drag fucntion welche x y werte 
+    }
+
+    function quadHit(_event: MouseEvent): void {
+        console.log("QUADHIT FUCNKTION CHECK ");
+        interfaceObjects[1].xPos = _event.offsetX;
+        interfaceObjects[1].yPos = _event.offsetY;
+        //  canvas.removeEventListener("mousemove", quadHit);
+        canvas.addEventListener("mouseup", quadDrop);
+
+    }
+
+    function quadDrop(_event: MouseEvent): void {
+        canvas.removeEventListener("mousemove", quadHit);
+        let uebergabe: MovingObjects = interfaceObjects[1];
+        //  let newQuad: MovingObjects = new Quad("quad", _event.offsetX, _event.offsetY, 1, "cyan", "0");
+        movingObjects.push(uebergabe);
+        interfaceObjects[1].draw();
+
+        canvas.removeEventListener("mouseup", quadDrop);
+        console.log(movingObjects[0].type);
+        movingObjects[0].type = "quad" + movingObjects.length;
+        console.log("NEUER TYPE SOLLTE HOCH ZÄHLEN0" + movingObjects[0].type + " ARAAY LÄNGE: " + movingObjects.length);
+        //  objekte werden einzeln gepusht 
+    }
+
+
+
+    function selectArea(_event: MouseEvent): void {
+        let xCursor: number = _event.clientX;
+        let yCursor: number = _event.clientY;
+        if (yCursor < 410 && xCursor >= parseInt(canvasWidth)) {
+            console.log("HOVER GEHT");
+            canvas.addEventListener("mousedown", selectObject);
+
+        }
+    }
+
+
+    function selectObject(_event: MouseEvent): void {
+        for (let i: number = 0; i < movingObjects.length; i++) {
+            if (_event.offsetX > movingObjects[i].xPos && _event.offsetX < movingObjects[i].xPos + movingObjects[i].size && _event.offsetY > movingObjects[i].yPos && _event.offsetY < movingObjects[i].yPos + movingObjects[i].size) {
+                index = i;
+                console.log("OBEJKT JAAAA ES GEHT: " + movingObjects[i].type);
+                sliderXSpeed.addEventListener("change", handleXSpeed);
+                sliderYSpeed.addEventListener("change", handleYSpeed);
+                scale.addEventListener("change", handleScale);
+                color.addEventListener("input", handleColor);
+
+                console.log("INDEX:" + index);
+
+
+            }
+        }
+    }
+
+    //___TEST
+
+    function handleXSpeed(): void {
+
+        // console.log("HANDLE XSPEED");
+        console.log("HANDLE XSPEED" + index);
+        let xSpeedOld: number = movingObjects[index].xSpeed;
+        console.log("xPSEEROLD:  " + xSpeedOld);
+        let xSpeedNew: string = sliderXSpeed.value;
+        let xSpeedNewInt: number = parseInt(xSpeedNew);
+        console.log("XSPEEDNEWINT NEW: " + xSpeedNewInt);
+        movingObjects[index].xSpeed = xSpeedNewInt;
+        console.log("FINALE XSPEED: " + movingObjects[index].xSpeed);
+        movingObjects[index].draw();
+        //  movingObjects[index].move();
+
+
+    }
+
+    function handleYSpeed(): void {
+
+        console.log("HANDLE YSPEED" + index);
+        let ySpeedOld: number = movingObjects[index].ySpeed;
+        console.log("yPSEEROLD:  " + ySpeedOld);
+        let ySpeedNew: string = sliderYSpeed.value;
+        let ySpeedNewInt: number = parseInt(ySpeedNew);
+        console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
+        movingObjects[index].ySpeed = ySpeedNewInt;
+        console.log("FINALE YSPEED: " + movingObjects[index].ySpeed);
+     //   movingObjects[index].draw();
+      //  movingObjects[index].move();
+
+
+    }
+
+    function handleScale(): void {
+
+        console.log("HANDLE SCALE" + index);
+        let scaleOld: number = movingObjects[index].scale;
+        console.log("SCALEOLD:  " + scaleOld);
+        let scaleNew: string = scale.value;
+        let scaleNewInt: number = parseInt(scaleNew);
+        console.log("SCALENEW: " + scaleNewInt);
+        movingObjects[index].scale = scaleNewInt;
+        console.log("FINALE SCALE: " + movingObjects[index].scale);
+      //  movingObjects[index].draw();
+       // movingObjects[index].move();
+
+
+    }
+
+    function handleColor(): void {
+
+        console.log("HANDLE COLOR" + index);
+        let colorOld: string = movingObjects[index].color;
+        console.log("COLOROLD:  " + colorOld);
+        let colorNew: string = color.value;
+        console.log("COLOR NEW: " + colorNew);
+        movingObjects[index].color = colorNew;
+        console.log("FINALE COLOR: " + movingObjects[index].color);
+      //  movingObjects[index].draw();
+    }
+
+
+
+    //_____TEST ENDE
+
+
+
+
 
     function drawInterface(): void {
-
         //interfaceObjects
         // kreis
         let i: number = interfaceObjects.length;
@@ -130,90 +281,16 @@ namespace Zauberbild {
         let triangle: Triangle = new Triangle("triangle" + i, 300, 100, 1, "red", "none");
         triangle.draw();
         console.log("Trianglex " + triangle.xPos + "Triangley " + triangle.yPos);
+
+
         // img data speichern
         interfaceObjects.push(circle, quad, triangle);
         console.log("Inteface object daten:  " + interfaceObjects[1].size);
         console.log("QUAD TYPE: " + quad.type);
 
-        //  console.log("TEST QUAD:   " + quad);
-
-    }
-
-    function deleteEventListener(_event: MouseEvent): void {
-
-        canvas.removeEventListener("mousemove", rePosition);
-        console.log("eventlistener removed");
-        movingObjects[0].xPos = _event.offsetX;
-        movingObjects[0].yPos = _event.offsetY;
-      //  console.log("X MO: " + movingObjects[0].xPos + " Y MO: " + movingObjects[0].yPos + "  NEW X" + _event.offsetX + " NEW Y: " + _event.offsetY);
-
-        movingObjects[0].draw();
-    }
-
-    function rePosition(_event: MouseEvent): void {
-        
-        // crc.translate(movingObjects[0].xPos, movingObjects[0].yPos);
-        //console.log("ÄÄÄÄÄÄÄÄÄÄ X: " + movingObjects[0].xPos + " Y POS: " + movingObjects[0].yPos);
-       // movingObjects[0].draw();
-        canvas.addEventListener("mouseup", deleteEventListener);
 
 
     }
-
-    function selectedObject(_event: MouseEvent): void {
-
-        // let returnString: string = "";
-        let xMouse: number = _event.clientX;
-        let yMouse: number = _event.clientY;
-        //console.log("MOUSE EVENT GEHT");
-        if (xMouse > 50 && xMouse < 133 && yMouse > 420 && yMouse < 495) {
-            globalReturnVar = "quad0";
-
-            console.log("HIT QUAD");
-            movingObjects.push(interfaceObjects[1]);
-            canvas.addEventListener("mousemove", rePosition);
-
-            console.log("MOVING OBJECTS" + movingObjects[0].type);
-            console.log("MOVING OBJECTS LÄNGE" + movingObjects.length);
-            //let globalReturnVar: string;
-
-        }
-        else {
-            globalReturnVar = "";
-            console.log("NO HIT");
-        }
-
-
-
-
-    }
-
-    function draggedGeometryNew(): void {
-
-        let type: string = globalReturnVar;
-
-
-
-        for (let i: number = 0; i < movingObjects.length; i++) {
-
-            if (globalReturnVar == "quad0" || globalReturnVar == "triangle0" || globalReturnVar == "circle0") {
-
-
-
-                //hi
-            }
-
-        }
-
-        // return value lat von oben = returnType();
-
-        // außerhalb eine fuction erstellen namens returnType(): string 
-
-    }
-
-
-
-
     function startGame(): void {
 
 
@@ -243,26 +320,23 @@ namespace Zauberbild {
         crc.fillStyle = "blue";
         crc.fillRect(0, 400, canvas.width, 100);
 
-        canvas.addEventListener("mouseup", function (): void {
-            move = false;
-            console.log("TEST FASLE");
-        });
-
-
-
-
-
         document.getElementById("quad");
         drawInterface();
 
-        canvas.addEventListener("mousedown", selectedObject);
 
-
-
-
+        canvas.addEventListener("mousedown", mouseDownCheck);
+        canvas.addEventListener("mouseover", selectArea);
+        /* sliderXSpeed.addEventListener("change", handleXSpeed);
+         sliderYSpeed.addEventListener("change", handleYSpeed);
+         scale.addEventListener("change", handleScale);
+         color.addEventListener("input", handleColor);
+         spin.addEventListener("input", handleSpin);
+ */
         imgData = crc.getImageData(0, 0, canvas.width, canvas.height);
         console.log(imgData);
-        window.requestAnimationFrame(update);
+        setInterval(update, 20);
+
+        // window.requestAnimationFrame(update);
         //  update();
 
     }
@@ -274,44 +348,42 @@ namespace Zauberbild {
         finalPage.style.display = "block";
     }
 
-    /*
-        function createNewCanvas(): void {
-            //to do
-        }
-    */
-
-
-
 
 
     function update(): void {
+        // console.log("UPDATE");
         crc.clearRect(0, 0, parseInt(canvasWidth), canvasHeight);
         crc.putImageData(imgData, 0, 0);
-        //clear rect
-        //get img data
-        //  console.log("Update start");
 
-        //for (let i:number =0;i<movingObjects.length;i++){
-        // movingObjcts[i].update()
-        // }
         for (let i: number = 0; i < movingObjects.length; i++) {
             movingObjects[i].draw();
             movingObjects[i].move();
-
+            // console.log("UPDATE");
         }
 
-        /*   if (globalReturnVar == "quad0" && ) {
-   
-   
-           }*/
-
-        //if(golbalVar == ""){
-        // was soll passieren? 
-        // symbol mit dem zugehörigen typ in movingobjects 
-        //}
 
 
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*
       //________________________________________

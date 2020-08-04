@@ -45,13 +45,13 @@ var Zauberbild;
         }
         //move-methode
         move() {
-            this.xPos -= this.xSpeed;
-            if (this.xPos < Zauberbild.canvas.width) {
+            this.xPos += this.xSpeed / 2;
+            if (this.xPos > Zauberbild.canvas.width) {
                 this.xPos = 0;
             }
-            this.yPos += this.ySpeed;
-            if (this.yPos < 0) {
-                this.yPos = Zauberbild.canvas.height;
+            this.yPos += this.ySpeed / 2;
+            if (this.yPos < Zauberbild.canvasHeight) {
+                this.yPos = 0;
             }
         }
         //pulse-methode

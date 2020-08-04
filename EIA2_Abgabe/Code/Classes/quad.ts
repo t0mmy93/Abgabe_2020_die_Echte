@@ -46,21 +46,22 @@ namespace Zauberbild {
         //draw-methode
         draw(): void {
             crc.fillStyle = this.color;
-           
+
             crc.fillRect(this.xPos, this.yPos, this.size, this.size);
-           // crc.translate(this.xPos, this.yPos);
+            // crc.translate(this.xPos, this.yPos);
         }
 
         //move-methode
         move(): void {
-            this.xPos -= this.xSpeed;
-            if (this.xPos < canvas.width) {
+            this.xPos += this.xSpeed / 2;
+            if (this.xPos > canvas.width) {
                 this.xPos = 0;
             }
-            this.yPos += this.ySpeed;
-            if (this.yPos < 0) {
-                this.yPos = canvas.height;
+            this.yPos += this.ySpeed / 2;
+            if (this.yPos < canvasHeight) {
+                this.yPos = 0;
             }
+
         }
 
         //pulse-methode
