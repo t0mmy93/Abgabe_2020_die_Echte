@@ -106,15 +106,18 @@ var Zauberbild;
     }
     function quadDrop(_event) {
         Zauberbild.canvas.removeEventListener("mousemove", quadHit);
-        let uebergabe = Zauberbild.interfaceObjects[1];
-        //  let newQuad: MovingObjects = new Quad("quad", _event.offsetX, _event.offsetY, 1, "cyan", "0");
-        Zauberbild.movingObjects.push(uebergabe);
-        Zauberbild.interfaceObjects[1].draw();
+        let newQuad = new Zauberbild.Quad("quad", _event.clientX, _event.clientY, 1, "yellow", 75);
+        Zauberbild.movingObjects.push(newQuad);
+        console.log(" MOVINOBJ LÄNGE: " + Zauberbild.movingObjects.length);
         Zauberbild.canvas.removeEventListener("mouseup", quadDrop);
-        console.log(Zauberbild.movingObjects[0].type);
-        Zauberbild.movingObjects[0].type = "quad" + Zauberbild.movingObjects.length;
-        console.log("NEUER TYPE SOLLTE HOCH ZÄHLEN0" + Zauberbild.movingObjects[0].type + " ARAAY LÄNGE: " + Zauberbild.movingObjects.length);
-        //  objekte werden einzeln gepusht 
+        for (let i = 0; i < Zauberbild.movingObjects.length; i++) {
+            Zauberbild.movingObjects[i].type = "quad" + Zauberbild.movingObjects.length;
+            Zauberbild.movingObjects[i].xSpeed = 0;
+            Zauberbild.movingObjects[i].ySpeed = 0;
+            // movingObjects[i].size = 75;
+        }
+        console.log(" ARAAY LÄNGE: " + Zauberbild.movingObjects.length);
+        console.log("TYPE HOCH ZÄHLEN: " + Zauberbild.movingObjects[0].type);
     }
     function selectArea(_event) {
         let xCursor = _event.clientX;
@@ -131,7 +134,7 @@ var Zauberbild;
                 console.log("OBEJKT JAAAA ES GEHT: " + Zauberbild.movingObjects[i].type);
                 sliderXSpeed.addEventListener("change", handleXSpeed);
                 sliderYSpeed.addEventListener("change", handleYSpeed);
-                scale.addEventListener("change", handleScale);
+                scale.addEventListener("change", handleSize);
                 color.addEventListener("input", handleColor);
                 console.log("INDEX:" + index);
             }
@@ -140,50 +143,50 @@ var Zauberbild;
     //___TEST
     function handleXSpeed() {
         // console.log("HANDLE XSPEED");
-        console.log("HANDLE XSPEED" + index);
+        //   console.log("HANDLE XSPEED" + index);
         let xSpeedOld = Zauberbild.movingObjects[index].xSpeed;
         console.log("xPSEEROLD:  " + xSpeedOld);
         let xSpeedNew = sliderXSpeed.value;
         let xSpeedNewInt = parseInt(xSpeedNew);
-        console.log("XSPEEDNEWINT NEW: " + xSpeedNewInt);
+        // console.log("XSPEEDNEWINT NEW: " + xSpeedNewInt);
         Zauberbild.movingObjects[index].xSpeed = xSpeedNewInt;
         console.log("FINALE XSPEED: " + Zauberbild.movingObjects[index].xSpeed);
         Zauberbild.movingObjects[index].draw();
         //  movingObjects[index].move();
     }
     function handleYSpeed() {
-        console.log("HANDLE YSPEED" + index);
+        //console.log("HANDLE YSPEED" + index);
         let ySpeedOld = Zauberbild.movingObjects[index].ySpeed;
         console.log("yPSEEROLD:  " + ySpeedOld);
         let ySpeedNew = sliderYSpeed.value;
         let ySpeedNewInt = parseInt(ySpeedNew);
-        console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
+        //  console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
         Zauberbild.movingObjects[index].ySpeed = ySpeedNewInt;
         console.log("FINALE YSPEED: " + Zauberbild.movingObjects[index].ySpeed);
         //   movingObjects[index].draw();
         //  movingObjects[index].move();
     }
-    function handleScale() {
-        console.log("HANDLE SCALE" + index);
-        let scaleOld = Zauberbild.movingObjects[index].scale;
-        console.log("SCALEOLD:  " + scaleOld);
-        let scaleNew = scale.value;
-        let scaleNewInt = parseInt(scaleNew);
-        console.log("SCALENEW: " + scaleNewInt);
-        Zauberbild.movingObjects[index].scale = scaleNewInt;
-        console.log("FINALE SCALE: " + Zauberbild.movingObjects[index].scale);
+    function handleSize() {
+        //   console.log("HANDLE SCALE" + index);
+        let sizeOld = Zauberbild.movingObjects[index].size;
+        console.log("SCALEOLD:  " + sizeOld);
+        let sizeNew = scale.value;
+        let sizeNewInt = parseInt(sizeNew);
+        console.log("SCALENEW: " + sizeNewInt);
+        Zauberbild.movingObjects[index].size = sizeNewInt;
+        console.log("FINALE SCALE: " + Zauberbild.movingObjects[index].size);
         //  movingObjects[index].draw();
         // movingObjects[index].move();
     }
     function handleColor() {
-        console.log("HANDLE COLOR" + index);
+        //console.log("HANDLE COLOR" + index);
         let colorOld = Zauberbild.movingObjects[index].color;
         console.log("COLOROLD:  " + colorOld);
         let colorNew = color.value;
-        console.log("COLOR NEW: " + colorNew);
+        //  console.log("COLOR NEW: " + colorNew);
         Zauberbild.movingObjects[index].color = colorNew;
         console.log("FINALE COLOR: " + Zauberbild.movingObjects[index].color);
-        //  movingObjects[index].draw();
+        Zauberbild.movingObjects[index].draw();
     }
     //_____TEST ENDE
     function drawInterface() {
@@ -194,7 +197,7 @@ var Zauberbild;
         circle.draw();
         console.log("circlex " + circle.xPos + "circley " + circle.yPos + circle.color);
         // viereck
-        let quad = new Zauberbild.Quad("quad" + i, 50, 410, 1, "yellow", "none");
+        let quad = new Zauberbild.Quad("quad" + i, 50, 410, 1, "yellow", 75);
         quad.draw();
         console.log("Quadx " + quad.xPos + "Quady " + quad.size);
         // Dreieck
@@ -258,6 +261,7 @@ var Zauberbild;
         Zauberbild.crc.putImageData(imgData, 0, 0);
         for (let i = 0; i < Zauberbild.movingObjects.length; i++) {
             Zauberbild.movingObjects[i].draw();
+            //   console.log("update " + i);
             Zauberbild.movingObjects[i].move();
             // console.log("UPDATE");
         }

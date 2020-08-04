@@ -153,16 +153,23 @@ namespace Zauberbild {
 
     function quadDrop(_event: MouseEvent): void {
         canvas.removeEventListener("mousemove", quadHit);
-        let uebergabe: MovingObjects = interfaceObjects[1];
-        //  let newQuad: MovingObjects = new Quad("quad", _event.offsetX, _event.offsetY, 1, "cyan", "0");
-        movingObjects.push(uebergabe);
-        interfaceObjects[1].draw();
+
+        let newQuad: Quad = new Quad("quad", _event.clientX, _event.clientY, 1, "yellow", 75);
+        movingObjects.push(newQuad);
+        console.log(" MOVINOBJ LÄNGE: " + movingObjects.length);
 
         canvas.removeEventListener("mouseup", quadDrop);
-        console.log(movingObjects[0].type);
-        movingObjects[0].type = "quad" + movingObjects.length;
-        console.log("NEUER TYPE SOLLTE HOCH ZÄHLEN0" + movingObjects[0].type + " ARAAY LÄNGE: " + movingObjects.length);
-        //  objekte werden einzeln gepusht 
+        for (let i: number = 0; i < movingObjects.length; i++) {
+            movingObjects[i].type = "quad" + movingObjects.length;
+            movingObjects[i].xSpeed = 0;
+            movingObjects[i].ySpeed = 0;
+           // movingObjects[i].size = 75;
+        }
+
+
+        console.log(" ARAAY LÄNGE: " + movingObjects.length);
+        console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
+
     }
 
 
@@ -185,7 +192,7 @@ namespace Zauberbild {
                 console.log("OBEJKT JAAAA ES GEHT: " + movingObjects[i].type);
                 sliderXSpeed.addEventListener("change", handleXSpeed);
                 sliderYSpeed.addEventListener("change", handleYSpeed);
-                scale.addEventListener("change", handleScale);
+                scale.addEventListener("change", handleSize);
                 color.addEventListener("input", handleColor);
 
                 console.log("INDEX:" + index);
@@ -200,12 +207,12 @@ namespace Zauberbild {
     function handleXSpeed(): void {
 
         // console.log("HANDLE XSPEED");
-        console.log("HANDLE XSPEED" + index);
+        //   console.log("HANDLE XSPEED" + index);
         let xSpeedOld: number = movingObjects[index].xSpeed;
         console.log("xPSEEROLD:  " + xSpeedOld);
         let xSpeedNew: string = sliderXSpeed.value;
         let xSpeedNewInt: number = parseInt(xSpeedNew);
-        console.log("XSPEEDNEWINT NEW: " + xSpeedNewInt);
+        // console.log("XSPEEDNEWINT NEW: " + xSpeedNewInt);
         movingObjects[index].xSpeed = xSpeedNewInt;
         console.log("FINALE XSPEED: " + movingObjects[index].xSpeed);
         movingObjects[index].draw();
@@ -216,46 +223,46 @@ namespace Zauberbild {
 
     function handleYSpeed(): void {
 
-        console.log("HANDLE YSPEED" + index);
+        //console.log("HANDLE YSPEED" + index);
         let ySpeedOld: number = movingObjects[index].ySpeed;
         console.log("yPSEEROLD:  " + ySpeedOld);
         let ySpeedNew: string = sliderYSpeed.value;
         let ySpeedNewInt: number = parseInt(ySpeedNew);
-        console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
+        //  console.log("YSPEEDNEWINT NEW: " + ySpeedNewInt);
         movingObjects[index].ySpeed = ySpeedNewInt;
         console.log("FINALE YSPEED: " + movingObjects[index].ySpeed);
-     //   movingObjects[index].draw();
-      //  movingObjects[index].move();
+        //   movingObjects[index].draw();
+        //  movingObjects[index].move();
 
 
     }
 
-    function handleScale(): void {
+    function handleSize(): void {
 
-        console.log("HANDLE SCALE" + index);
-        let scaleOld: number = movingObjects[index].scale;
-        console.log("SCALEOLD:  " + scaleOld);
-        let scaleNew: string = scale.value;
-        let scaleNewInt: number = parseInt(scaleNew);
-        console.log("SCALENEW: " + scaleNewInt);
-        movingObjects[index].scale = scaleNewInt;
-        console.log("FINALE SCALE: " + movingObjects[index].scale);
-      //  movingObjects[index].draw();
-       // movingObjects[index].move();
+        //   console.log("HANDLE SCALE" + index);
+        let sizeOld: number = movingObjects[index].size;
+        console.log("SCALEOLD:  " + sizeOld);
+        let sizeNew: string = scale.value;
+        let sizeNewInt: number = parseInt(sizeNew);
+        console.log("SCALENEW: " + sizeNewInt);
+        movingObjects[index].size = sizeNewInt;
+        console.log("FINALE SCALE: " + movingObjects[index].size);
+        //  movingObjects[index].draw();
+        // movingObjects[index].move();
 
 
     }
 
     function handleColor(): void {
 
-        console.log("HANDLE COLOR" + index);
+        //console.log("HANDLE COLOR" + index);
         let colorOld: string = movingObjects[index].color;
         console.log("COLOROLD:  " + colorOld);
         let colorNew: string = color.value;
-        console.log("COLOR NEW: " + colorNew);
+        //  console.log("COLOR NEW: " + colorNew);
         movingObjects[index].color = colorNew;
         console.log("FINALE COLOR: " + movingObjects[index].color);
-      //  movingObjects[index].draw();
+        movingObjects[index].draw();
     }
 
 
@@ -274,7 +281,7 @@ namespace Zauberbild {
         circle.draw();
         console.log("circlex " + circle.xPos + "circley " + circle.yPos + circle.color);
         // viereck
-        let quad: Quad = new Quad("quad" + i, 50, 410, 1, "yellow", "none");
+        let quad: Quad = new Quad("quad" + i, 50, 410, 1, "yellow", 75);
         quad.draw();
         console.log("Quadx " + quad.xPos + "Quady " + quad.size);
         // Dreieck
@@ -324,6 +331,8 @@ namespace Zauberbild {
         drawInterface();
 
 
+
+
         canvas.addEventListener("mousedown", mouseDownCheck);
         canvas.addEventListener("mouseover", selectArea);
         /* sliderXSpeed.addEventListener("change", handleXSpeed);
@@ -357,6 +366,7 @@ namespace Zauberbild {
 
         for (let i: number = 0; i < movingObjects.length; i++) {
             movingObjects[i].draw();
+            //   console.log("update " + i);
             movingObjects[i].move();
             // console.log("UPDATE");
         }

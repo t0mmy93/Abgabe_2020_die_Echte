@@ -1,11 +1,11 @@
 namespace Zauberbild {
     export class Quad extends MovingObjects {
         //variable für seitenlängen des quad
-        size: number = 75;
+       // size: number = 75;
         spinValue: string;
 
 
-        constructor(_type: string, _xPos: number, _yPos: number, _scale: number, _color: string, _spinValue: string) {
+        constructor(_type: string, _xPos: number, _yPos: number, _scale: number, _color: string, _size: number) {
             super();
             //Achtung!
             //hier spielt die drag sache mit rein
@@ -25,7 +25,7 @@ namespace Zauberbild {
             // parameter color soll durch value von input element verändert werden können
             this.color = _color;
             // parameter spinValue soll durch value von input element verändert werden können
-            this.spinValue = _spinValue;
+            this.size = _size;
 
         }
 
@@ -45,10 +45,11 @@ namespace Zauberbild {
 
         //draw-methode
         draw(): void {
+
             crc.fillStyle = this.color;
 
             crc.fillRect(this.xPos, this.yPos, this.size, this.size);
-            // crc.translate(this.xPos, this.yPos);
+            //  crc.translate(this.xPos, this.yPos);
         }
 
         //move-methode
@@ -58,12 +59,14 @@ namespace Zauberbild {
                 this.xPos = 0;
             }
             this.yPos += this.ySpeed / 2;
-            if (this.yPos < canvasHeight) {
+            if (this.yPos > 410) {
                 this.yPos = 0;
             }
 
         }
 
+
+        
         //pulse-methode
         pulse(): void {
             //hier kommt die pulse methode rein (die radius änderung mit hilfe von this.size)
