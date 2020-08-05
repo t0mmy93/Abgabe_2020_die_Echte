@@ -1,3 +1,5 @@
+//import { type } from "os";
+
 namespace Zauberbild {
 
     /*
@@ -104,12 +106,14 @@ namespace Zauberbild {
         }
         if (_event.offsetX > 160 && _event.offsetX < 243 && _event.offsetY > 420 && _event.offsetY < 495) {
             console.log("CIRCLEHIT");
+            canvas.addEventListener("mousemove", circleHit);
         }
         if (_event.offsetX > 270 && _event.offsetX < 353 && _event.offsetY > 420 && _event.offsetY < 495) {
             console.log("TRIANGLEHIT");
+            canvas.addEventListener("mousemove", triangleHit);
         }
     }
-
+    // Quad
     function quadHit(_event: MouseEvent): void {
         console.log("QUADHIT FUCNKTION CHECK ");
         canvas.addEventListener("mouseup", quadDrop);
@@ -132,6 +136,53 @@ namespace Zauberbild {
         console.log(" ARAAY LÄNGE: " + movingObjects.length);
         console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
     }
+    // circle
+
+
+    function circleHit(_event: MouseEvent): void {
+        console.log("QUADHIT FUCNKTION CHECK ");
+        canvas.addEventListener("mouseup", circleDrop);
+    }
+    // circle plazieren
+    function circleDrop(_event: MouseEvent): void {
+        canvas.removeEventListener("mousemove", circleHit);
+
+        let newCircle: Circle = new Circle("circle", _event.clientX, _event.clientY, 1, "yellow");  //, false
+        movingObjects.push(newCircle);
+        console.log("circle MOVINOBJ LÄNGE: " + movingObjects.length);
+
+        canvas.removeEventListener("mouseup", circleDrop);
+        for (let i: number = 0; i < movingObjects.length; i++) {
+            movingObjects[i].type = "circle" + movingObjects.length;
+            movingObjects[i].xSpeed = 0;
+            movingObjects[i].ySpeed = 0;
+        }
+        console.log(" ARAAY LÄNGE: " + movingObjects.length);
+        console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
+    }
+
+    // triangle 
+    function triangleHit(_event: MouseEvent): void {
+        console.log("triangleHIT FUCNKTION CHECK ");
+        canvas.addEventListener("mouseup", triangleDrop);
+    }
+    // circle plazieren
+    function triangleDrop(_event: MouseEvent): void {
+        canvas.removeEventListener("mousemove", triangleHit);
+
+        let newTriangle: Triangle = new Triangle("triangle", _event.clientX, _event.clientY, 1, "yellow", "none");  //, false
+        movingObjects.push(newTriangle);
+        //console.log("circle MOVINOBJ LÄNGE: " + movingObjects.length);
+
+        canvas.removeEventListener("mouseup", circleDrop);
+        for (let i: number = 0; i < movingObjects.length; i++) {
+            movingObjects[i].type = "circle" + movingObjects.length;
+            movingObjects[i].xSpeed = 0;
+            movingObjects[i].ySpeed = 0;
+        }
+        console.log(" ARAAY LÄNGE: " + movingObjects.length);
+        console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
+    }
 
 
     // sobald die Maus über dem Target liegt kann man auf objekte klicken
@@ -143,20 +194,48 @@ namespace Zauberbild {
             canvas.addEventListener("mousedown", selectObject);
         }
     }
-
     // Obejct auswählen
     function selectObject(_event: MouseEvent): void {
+        // let type: string;
         for (let i: number = 0; i < movingObjects.length; i++) {
             if (_event.offsetX > movingObjects[i].xPos && _event.offsetX < movingObjects[i].xPos + movingObjects[i].size && _event.offsetY > movingObjects[i].yPos && _event.offsetY < movingObjects[i].yPos + movingObjects[i].size) {
                 index = i;
+                // switch case test
+                /*       type = movingObjects[i].type;
+                       switch (type) {
+                           case "quad1": {
+                               console.log("quad1 case");
+                               break;
+                           }
+                           case "quad2": {
+                               console.log("quad2 case");
+                               break;
+                           }
+                           default: {
+                               console.log("default");
+                               break;
+                           }
+                       }
+       */
+                // ende 
+
+                // logik fehler es werden immer alle symbole durch laufen und mit glow versehen 
+                console.log("TYPE:  " + movingObjects[i].type);
                 console.log("OBEJKT JAAAA ES GEHT: " + movingObjects[i].type);
                 sliderXSpeed.addEventListener("change", handleXSpeed);
                 sliderYSpeed.addEventListener("change", handleYSpeed);
                 scale.addEventListener("change", handleSize);
                 color.addEventListener("input", handleColor);
                 canvas.addEventListener("mouseup", function (): void {
-                    movingObjects[i].glow = true;
-                    console.log("EVENTLISTENER GLOW");
+
+                    if (movingObjects[i].type == "quad" + movingObjects.length) {
+                        movingObjects[index].glow = true;
+                        console.log("EVENTLISTENER GLOW");
+                    }
+                    // nur objekte mit dem type, welche durch den Mausklick regestriert wurde ( type: quad1 == Typ vom click regestriert = quad1) dann soll glow aktiv sein 
+                    // wird ein neues angeklickt z.b. quad2 soll quad1.glow = false und quad2.glow = true
+                    else movingObjects[i].glow = false;
+
                 });
                 console.log("INDEX:" + index);
             }
