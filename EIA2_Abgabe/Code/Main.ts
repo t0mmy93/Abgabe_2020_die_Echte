@@ -115,17 +115,18 @@ namespace Zauberbild {
     }
     // Quad
     function quadHit(_event: MouseEvent): void {
-        console.log("QUADHIT FUCNKTION CHECK ");
+        //   console.log("QUADHIT FUCNKTION CHECK ");
         canvas.addEventListener("mouseup", quadDrop);
     }
     // quad plazieren
     function quadDrop(_event: MouseEvent): void {
-        canvas.removeEventListener("mousemove", quadHit);
+
 
         let newQuad: Quad = new Quad("quad", _event.clientX, _event.clientY, 1, "yellow", 75, false);
         movingObjects.push(newQuad);
         console.log(" MOVINOBJ LÄNGE: " + movingObjects.length);
-
+        //  movingObjects[movingObjects.length - 1].draw();
+        // canvas.removeEventListener("mousemove", quadHit);
         canvas.removeEventListener("mouseup", quadDrop);
         for (let i: number = 0; i < movingObjects.length; i++) {
             movingObjects[i].type = "quad" + movingObjects.length;
@@ -134,13 +135,13 @@ namespace Zauberbild {
             movingObjects[i].ySpeed = 0;
         }
         console.log(" ARAAY LÄNGE: " + movingObjects.length);
-        console.log("TYPE HOCH ZÄHLEN: " + movingObjects[0].type);
+        console.log("TYPE: " + movingObjects[0].type);
     }
     // circle
 
 
     function circleHit(_event: MouseEvent): void {
-        console.log("QUADHIT FUCNKTION CHECK ");
+        //   console.log("QUADHIT FUCNKTION CHECK ");
         canvas.addEventListener("mouseup", circleDrop);
     }
     // circle plazieren
@@ -163,7 +164,7 @@ namespace Zauberbild {
 
     // triangle 
     function triangleHit(_event: MouseEvent): void {
-        console.log("triangleHIT FUCNKTION CHECK ");
+        //  console.log("triangleHIT FUCNKTION CHECK ");
         canvas.addEventListener("mouseup", triangleDrop);
     }
     // circle plazieren
@@ -221,7 +222,7 @@ namespace Zauberbild {
 
                 // logik fehler es werden immer alle symbole durch laufen und mit glow versehen 
                 console.log("TYPE:  " + movingObjects[i].type);
-                console.log("OBEJKT JAAAA ES GEHT: " + movingObjects[i].type);
+                console.log("OBEJKT is selected: " + movingObjects[i].type);
                 sliderXSpeed.addEventListener("change", handleXSpeed);
                 sliderYSpeed.addEventListener("change", handleYSpeed);
                 scale.addEventListener("change", handleSize);
@@ -230,7 +231,7 @@ namespace Zauberbild {
 
                     if (movingObjects[i].type == "quad" + movingObjects.length) {
                         movingObjects[index].glow = true;
-                        console.log("EVENTLISTENER GLOW");
+                        //         console.log("EVENTLISTENER GLOW");
                     }
                     // nur objekte mit dem type, welche durch den Mausklick regestriert wurde ( type: quad1 == Typ vom click regestriert = quad1) dann soll glow aktiv sein 
                     // wird ein neues angeklickt z.b. quad2 soll quad1.glow = false und quad2.glow = true
@@ -311,19 +312,19 @@ namespace Zauberbild {
         let i: number = interfaceObjects.length;
         let circle: Circle = new Circle("circle" + i, 200, 450, 1, "yellow");
         circle.draw();
-        console.log("circlex " + circle.xPos + "circley " + circle.yPos + circle.color);
+        //  console.log("circlex " + circle.xPos + "circley " + circle.yPos + circle.color);
         // viereck
         let quad: Quad = new Quad("quad" + i, 50, 410, 1, "yellow", 75, false);
         quad.draw();
-        console.log("Quadx " + quad.xPos + "Quady " + quad.size);
+        // console.log("Quadx " + quad.xPos + "Quady " + quad.size);
         // Dreieck
-        let triangle: Triangle = new Triangle("triangle" + i, 300, 100, 1, "red", "none");
+        let triangle: Triangle = new Triangle("triangle" + i, 300, 100, 1, "yellow", "none");
         triangle.draw();
-        console.log("Trianglex " + triangle.xPos + "Triangley " + triangle.yPos);
+        // console.log("Trianglex " + triangle.xPos + "Triangley " + triangle.yPos);
 
         interfaceObjects.push(circle, quad, triangle);
-        console.log("Inteface object daten:  " + interfaceObjects[1].size);
-        console.log("QUAD TYPE: " + quad.type);
+        //    console.log("Inteface object daten:  " + interfaceObjects[1].size);
+        // console.log("QUAD TYPE: " + quad.type);
     }
 
     function startGame(): void {
@@ -343,12 +344,12 @@ namespace Zauberbild {
         canvasContainer.appendChild(canvas);
         console.log("create Canvas");
         crc = <CanvasRenderingContext2D>canvas.getContext("2d");
-        crc.fillStyle = "green";
+        crc.fillStyle = "lightblue";
         crc.fillRect(0, 0, canvas.width, canvas.height);
-        console.log(crc);
-        console.log("create Canvas");
-        console.log(canvas.height);
-        console.log(canvas.width);
+        // console.log(crc);
+        // console.log("create Canvas");
+        //  console.log(canvas.height);
+        //  console.log(canvas.width);
         // Menüleiste
         crc.fillStyle = "blue";
         crc.fillRect(0, 400, canvas.width, 100);
@@ -362,17 +363,19 @@ namespace Zauberbild {
 
         // aktuelles Canvas speichern
         imgData = crc.getImageData(0, 0, canvas.width, canvas.height);
-        console.log(imgData);
+        //  console.log(imgData);
         setInterval(update, 20);
 
 
     }
     // Seite 3
     function endGame(): void {
-
         startPage.style.display = "none";
         gamePage.style.display = "none";
         finalPage.style.display = "block";
+        // document.getElementById("saveImgToDb").addEventListener("click", handleRequest);
+        let refreshButton: HTMLButtonElement = <HTMLButtonElement>document.getElementById("refresh");
+        refreshButton.addEventListener("click", function (): void { location.reload(); });
     }
 
 
